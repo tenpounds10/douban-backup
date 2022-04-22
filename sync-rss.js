@@ -414,7 +414,8 @@ async function addToNotion(itemData, category) {
     // remove cols which are not in the current database
     const propKeys = Object.keys(properties);
     propKeys.map(prop => {
-      if (columns.indexOf(prop) < 0) {
+      // we don't have 海报 in db as we're puting it in content
+      if (prop != DB_PROPERTIES.POSTER && columns.indexOf(prop) < 0) {
         delete properties[prop];
       }
     });
@@ -430,14 +431,31 @@ async function addToNotion(itemData, category) {
       // fill in properties by the format: https://developers.notion.com/reference/page#page-property-value
       properties,
     };
+
     if (properties[DB_PROPERTIES.POSTER]) {
       // use poster for the page cover
-      postData.cover = {
-        type: 'external',
-        external: {
-          url: properties[DB_PROPERTIES.POSTER]?.files[0]?.external?.url, // cannot be empty string or null
-        },
-      }
+      // postData.cover = {
+      //   type: 'external',
+      //   external: {
+      //     url: properties[DB_PROPERTIES.POSTER]?.files[0]?.external?.url, // cannot be empty string or null
+      //   },
+      // }
+
+      // show content image instead of cover for easier copy and paste
+      postData.children = [
+        {
+          object: 'block',
+          type: 'image',
+          image: {
+            type: 'external',
+            external: {
+              url: properties[DB_PROPERTIES.POSTER]?.files[0]?.external?.url, // cannot be empty string or null
+            },
+          }
+        }
+      ];
+      // because we don't have the poster column, otherwise it's gonna fail to insert
+      delete properties[DB_PROPERTIES.POSTER];
     }
     const response = await notion.pages.create(postData);
     if (response && response.id) {
