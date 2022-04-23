@@ -19,6 +19,7 @@ const DB_PROPERTIES = {
   PUBLISHING_HOUSE: '出版社',
   WRITER: '作者',
   ISBN: 'ISBN',
+  TAG: 'Tag',
 };
 
 const PropertyType = {
@@ -39,6 +40,7 @@ const PropertyType = {
   PUBLISHING_HOUSE: 'rich_text',
   WRITER: 'rich_text',
   ISBN: 'number',
+  TAG: 'multi_select',
 };
 
 function sleep(ms) {
