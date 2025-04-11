@@ -179,7 +179,7 @@ function getCategoryAndId(title, link) {
   let res, id;
   switch (m) {
     case '看过':
-      if (link.startsWith('http://movie.douban.com/')) {
+      if (link.startsWith('https://movie.douban.com/')) {
         res = CATEGORY.movie; // "看过" maybe 舞台剧
         id = link.match(/movie\.douban\.com\/subject\/(\d+)\/?/);
         id = id[1]; // string
