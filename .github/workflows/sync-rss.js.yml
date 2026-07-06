@@ -10,7 +10,7 @@ on:
     # Runs every 12 hours
     # - cron:  '0 */12 * * *'
     # runs at 0:))
-    - cron: '0 0 * * *'
+    - cron: '0 0 */2 * *'
 
 jobs:
   build:
